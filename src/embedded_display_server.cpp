@@ -2,6 +2,7 @@
 
 #include <godot_cpp/classes/display_server_embedded.hpp>
 #include <godot_cpp/classes/global_constants.hpp>
+#include <godot_cpp/classes/rendering_native_surface.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/variant/vector2.hpp>
@@ -16,6 +17,17 @@ int embedded_display_server_is_available(void) {
 }
 
 static inline DisplayServerEmbedded *eds() { return DisplayServerEmbedded::get_singleton(); }
+
+void embedded_display_server_set_native_surface(void *native_surface_object) {
+	Ref<RenderingNativeSurface> surf;
+	if (native_surface_object) {
+		Object *obj = reinterpret_cast<Object *>(native_surface_object);
+		if (auto *typed = Object::cast_to<RenderingNativeSurface>(obj)) {
+			surf = Ref<RenderingNativeSurface>(typed);
+		}
+	}
+	DisplayServerEmbedded::set_native_surface(surf);
+}
 
 void embedded_display_server_resize_window(int32_t width, int32_t height, int32_t window_id) {
 	if (auto *d = eds()) {

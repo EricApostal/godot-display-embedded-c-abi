@@ -18,6 +18,10 @@ extern "C" {
 // Returns 1 if DisplayServerEmbedded singleton is available, 0 otherwise.
 int embedded_display_server_is_available(void);
 
+// Set the native rendering surface (platform dependent object pointer).
+// Pass the underlying Godot object pointer of a RenderingNativeSurface* (may be null to clear).
+void embedded_display_server_set_native_surface(void *native_surface_object);
+
 // Resize a window (0 = main window unless multi-window is supported).
 void embedded_display_server_resize_window(int32_t width, int32_t height, int32_t window_id);
 
